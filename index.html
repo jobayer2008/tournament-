@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f9d58">
+<title>জংগল ঠেংগা মিনিবার ফুটবল টুর্নামেন্ট</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@600;800&family=Hind+Siliguri:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14213d;--pitch:#0f9d58;--sun:#ffc233;--coral:#ff5a5f;--sky:#2e90fa;--vio:#7a5af8;--bg:#f2f6ff;--mut:#5b6b86;--line:#dbe4f5}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.65 "Hind Siliguri",system-ui,sans-serif}
+h1,h2,h3,.score,.stat strong{font-family:"Baloo Da 2","Hind Siliguri",sans-serif;line-height:1.2}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.wrap{width:min(1160px,92%);margin:auto}.hidden{display:none!important}.muted{color:var(--mut)}.tiny{font-size:.82rem}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:4px solid var(--sun)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;line-height:1.3}
+.ball{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--ink);font-size:1.3rem;flex:none}
+.navlinks{display:flex;gap:6px;align-items:center}
+.navlinks a{color:var(--ink);text-decoration:none;padding:6px 11px;border-radius:99px;font-weight:700;font-size:.92rem}
+.navlinks a:hover{background:#e8f0ff}
+.btn{border:2px solid transparent;background:var(--pitch);color:#fff;font-weight:700;padding:8px 18px;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}.btn.sun{background:var(--sun);color:var(--ink)}.btn.secondary{background:#fff;color:var(--ink);border-color:var(--line)}.btn.danger{background:var(--coral)}.btn.small{padding:4px 12px;font-size:.86rem}
+.hero{margin:26px 0 8px;border-radius:26px;overflow:hidden;position:relative;color:#fff;padding:clamp(26px,5vw,60px);background:repeating-linear-gradient(90deg,#0f9d58 0 84px,#14ab62 84px 168px);border:4px solid #fff;box-shadow:0 0 0 2px var(--pitch)}
+.hero:before{content:"";position:absolute;right:-70px;top:50%;width:300px;height:300px;margin-top:-150px;border:4px solid #ffffff80;border-radius:50%}
+.hero:after{content:"";position:absolute;right:79px;top:0;bottom:0;border-right:4px solid #ffffff80}
+.hero>*{position:relative;z-index:1}
+.hero h1{font-size:clamp(2rem,6vw,3.8rem);margin:0 0 12px;max-width:760px;font-weight:800;text-shadow:0 3px 0 #0a6b3b}
+.hero p{max-width:620px;margin:0 0 22px;font-size:1.08rem}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 8px}
+.stat{border-radius:18px;padding:16px 18px;color:#fff;background:var(--c)}
+.stat strong{display:block;font-size:2.1rem}.stat span{font-weight:700}
+section{padding:22px 0 8px;scroll-margin-top:84px}
+.sectionHead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px}
+.sectionHead h2{margin:0;font-size:clamp(1.4rem,3vw,1.9rem)}
+.sectionHead h2:before{content:"";display:inline-block;width:10px;height:1.05em;background:var(--c,var(--pitch));border-radius:5px;margin-right:10px;vertical-align:-.12em}
+.sectionHead p{margin:2px 0 0;color:var(--mut);font-size:.92rem}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0;box-shadow:0 2px 0 var(--line)}
+.card h3{margin:0 0 8px}
+.empty{grid-column:1/-1;padding:24px;text-align:center;color:var(--mut);background:#fff;border:2px dashed var(--line);border-radius:16px}
+.match{background:#fff;border:1px solid var(--line);border-top:7px solid var(--c);border-radius:16px;padding:14px 16px}
+.mt{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.mt b{color:var(--c)}
+.teams{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;text-align:center}
+.side{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}.side svg{width:68px;height:auto}.tn{font:800 1.3rem/1.25 'Baloo Da 2','Hind Siliguri',sans-serif;text-align:center;overflow-wrap:anywhere;border-bottom:4px solid var(--k,var(--pitch));padding-bottom:1px}.roundCard .tn{font-size:1.1rem}.roundCard .side svg{width:54px}
+.score{background:var(--ink);color:var(--sun);border-radius:12px;padding:2px 14px;font-size:1.5rem;font-weight:800;white-space:nowrap}
+.mb{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:.86rem;color:var(--mut)}
+.res{margin-top:8px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:700;color:var(--pitch);font-size:.9rem}.res span{color:var(--mut);font-weight:500}
+.pill{display:inline-block;border-radius:99px;padding:1px 11px;font-size:.78rem;font-weight:700;background:#dcebff;color:#175cd3}
+.pill.live{background:var(--coral);color:#fff}.pill.completed{background:#d3f8e2;color:#05603a}.pill.ok{background:#d3f8e2;color:#05603a}.pill.wait{background:#fff0c2;color:#8a5a00}
+.roundCard{border-top:7px solid var(--c)}.roundCard h3{color:var(--c)}.roundCard .match{margin-top:10px;background:#f8faff}
+.tableWrap{overflow:auto;border-radius:16px;border:1px solid var(--line);background:#fff}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th{background:var(--ink);color:#fff;text-align:left;padding:11px 13px}td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}tr:last-child td{border:0}tbody tr:nth-child(even){background:#f8faff}
+.teamCard{display:flex;gap:12px;align-items:center;border-left:7px solid var(--c)}
+.teamCard .ball{background:var(--c)}
+.search{max-width:220px;padding:9px 14px;border:2px solid var(--line);border-radius:99px;background:#fff}
+.formGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:4px}.field.full{grid-column:1/-1}
+.field label{font-size:.88rem;font-weight:700}
+.field input,.field select,.field textarea{width:100%;min-width:0;background:#fff;border:2px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--ink)}
+.field textarea{min-height:90px;resize:vertical}
+.adminBar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.adminGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.item{border-left:5px solid var(--sky);background:#f4f8ff;border-radius:0 12px 12px 0;padding:9px 12px;margin:8px 0}
+.cardActions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.hr{height:1px;background:var(--line);margin:14px 0}
+.authOverlay{position:fixed;inset:0;z-index:50;background:#14213dcc;display:grid;place-items:center;padding:18px;overflow:auto}
+.authBox{width:min(480px,100%)}.authTabs{display:flex;gap:8px;margin:0 0 16px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:60;background:var(--ink);color:#fff;padding:10px 20px;border-radius:99px;font-weight:700;max-width:90%;display:none;box-shadow:0 8px 24px #0004}
+.footer{margin-top:30px;background:var(--ink);color:#c9d4ea;text-align:center;padding:24px 0;font-size:.92rem}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,1fr)}.adminGrid{grid-template-columns:1fr}.navlinks a{display:none}.hero:before,.hero:after{opacity:.5}}
+@media(max-width:520px){.grid,.formGrid{grid-template-columns:1fr}.field.full{grid-column:auto}.sectionHead{flex-direction:column;align-items:flex-start}.brand span{font-size:.9rem}}
+
+.adminGrid>.card{border:3px solid var(--pitch);border-radius:22px;position:relative;overflow:hidden;background:repeating-linear-gradient(90deg,#f2fbf6 0 44px,#e7f7ed 44px 88px)}
+.adminGrid>.card:after{content:"";position:absolute;right:-50px;bottom:-50px;width:140px;height:140px;border:3px solid #0f9d5833;border-radius:50%;pointer-events:none}
+.adminGrid>.card>h3{background:var(--pitch);color:#fff;margin:-18px -18px 14px;padding:10px 18px;display:flex;justify-content:space-between}
+.adminGrid>.card>h3:after{content:"⚽"}
+.slider{position:relative;overflow:hidden;border-radius:16px;margin-top:20px;border:4px solid #fff;background:#0a6b3b}
+.track{display:flex;transition:transform .6s ease}.track img{min-width:100%;width:100%;height:clamp(150px,32vw,320px);object-fit:cover}
+.sb{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:0;background:#ffffffdd;font-size:1.5rem;line-height:1}.prev{left:10px}.next{right:10px}
+.dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;background:#ffffff99;cursor:pointer}.dots i.on{background:var(--sun)}
+
+
+/* ===== ফুটবল-স্টাইল আপডেট ===== */
+.match{position:relative;background:#fff;border:3px solid var(--c);border-top-width:3px;border-radius:22px;padding:0;overflow:hidden;box-shadow:0 5px 0 var(--c),0 10px 20px #14213d18}
+.match .mt{margin:0;padding:8px 14px;background:var(--c);color:#fff}.match .mt b{color:#fff;font-family:"Baloo Da 2",sans-serif;font-size:1.02rem}
+.match .mt .pill{background:#fff;color:var(--ink)}.match .mt .pill.live{background:var(--coral);color:#fff}
+.pitchBox{position:relative;padding:18px 8px 12px;background:repeating-linear-gradient(90deg,#14ab62 0 38px,#0f9d58 38px 76px);overflow:hidden}
+.pitchBox:before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:3px solid #ffffff90}
+.pitchBox:after{content:"";position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px 0 0 -48px;border:3px solid #ffffff90;border-radius:50%}
+.pitchBox .teams{position:relative;z-index:1;align-items:end}
+.match .side{gap:6px}.match .side svg{width:92px;filter:drop-shadow(0 4px 0 #0a6b3b99)}
+.match .tn{font:800 clamp(1.15rem,1rem + .9vw,1.7rem)/1.2 'Baloo Da 2','Hind Siliguri',sans-serif;background:var(--k);color:var(--kt,#fff);border:3px solid #fff;border-radius:14px;padding:2px 12px 3px;box-shadow:0 4px 0 #0006;max-width:100%}
+.match .score{font-size:1.7rem;padding:4px 14px;border:3px solid #fff;box-shadow:0 4px 0 #0006;align-self:center}
+.match .mb{margin:0;padding:9px 14px;border-top:0;background:#fff}
+.match .res{margin:0;padding:8px 14px;background:#f1fbf5;border-top:1px dashed var(--line)}
+.match .cardActions{margin:0;padding:8px 14px 12px;background:#fff;border-top:1px dashed var(--line)}
+.roundCard .match{background:#fff;margin-top:12px}.roundCard .side svg{width:70px}.roundCard .tn{font-size:1.15rem}.roundCard .score{font-size:1.25rem;padding:2px 9px}
+.teamCard{position:relative;border:3px solid var(--c);border-left-width:3px;border-radius:22px;background:repeating-linear-gradient(90deg,#fff 0 30px,#f4fbf7 30px 60px);box-shadow:0 5px 0 var(--c);flex-wrap:wrap}
+.teamCard svg{width:64px;flex:none}.teamCard h3{font-size:1.35rem}
+.teamCard .cardActions{width:100%;margin-top:2px}
+.item{border-left:0;border:2px solid var(--line);border-radius:14px;background:#fff;position:relative;padding-left:40px}
+.item:before{content:"⚽";position:absolute;left:11px;top:9px;font-size:1.15rem}
+.slider{margin:18px 0 6px;border:4px solid #fff;border-radius:22px;box-shadow:0 0 0 3px var(--pitch),0 10px 22px #14213d22;touch-action:pan-y}
+.track img{user-select:none;-webkit-user-drag:none}
+.bnItem{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.bnItem img{width:96px;height:54px;object-fit:cover;border-radius:10px;border:2px solid var(--line)}
+
+/* ===== অ্যাডমিন গুছানো + সময় পিকার ===== */
+.adminTabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;margin-bottom:6px;position:sticky;top:0;z-index:5;background:var(--bg,#fff);-webkit-overflow-scrolling:touch}
+.adminTabs a{flex:0 0 auto;padding:8px 14px;border-radius:99px;background:var(--pitch);color:#fff;font-weight:700;font-size:.9rem;text-decoration:none;white-space:nowrap}
+.adminGrid>.card{scroll-margin-top:70px}
+.btnRow{display:flex;flex-direction:row;flex-wrap:wrap;gap:10px}
+.btnRow .btn{flex:1 1 140px;padding:11px 18px;font-size:1rem}
+.adminGrid .cardActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.timePick{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:6px}
+.timePick select{width:100%;min-width:0;background:#fff;border:2px solid var(--line);border-radius:10px;padding:9px 6px;color:var(--ink)}
+.setTimeBtn{margin-top:6px;width:100%;padding:10px 14px}
+.tpOk{color:#0a6b3b;font-weight:700}
+
+/* ===== লাইভ/সামনের ম্যাচ সেকশন ===== */
+.topItem{display:flex;flex-direction:column;gap:6px}
+.topTag{align-self:flex-start;background:#14213d;color:#fff;font-weight:800;font-size:.9rem;padding:6px 14px;border-radius:99px}
+.topTag.nextTag{background:#f79009}
+.topTag.liveTag{background:#e63946;animation:livePulse 1.3s ease-in-out infinite}
+@keyframes livePulse{0%,100%{box-shadow:0 0 0 0 #e6394688}50%{box-shadow:0 0 0 8px #e6394600}}
+#topMatches{margin-top:18px}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap nav">
+  <div class="brand"><div class="ball">⚽</div><span id="siteBrand">জংগল ঠেংগা মিনিবার ফুটবল টুর্নামেন্ট</span></div>
+  <nav class="navlinks"><a href="#today">আজকের ম্যাচ</a><a href="#rounds">রাউন্ড</a><a href="#teams">দল</a><a href="#results">ফলাফল</a><a id="adminLink" class="hidden" href="#admin">অ্যাডমিন</a><button class="btn" id="loginBtn" type="button">লগইন / রেজিস্ট্রেশন</button></nav>
+</div></header>
+
+<main class="wrap">
+<div id="bannerArea"></div>
+<div class="hero" id="home">
+  <h1 id="heroTitle"></h1><p id="heroText"></p>
+  <div class="actions"><a class="btn sun" href="#today">আজকের ম্যাচ দেখুন</a><a class="btn secondary" href="#rounds">সব রাউন্ড</a></div>
+</div>
+<section id="topMatches" style="--c:#ff5a5f"><div class="sectionHead"><div><h2>🔴 লাইভ ও সামনের ম্যাচ</h2><p>এখন যে ম্যাচ চলছে এবং এরপর যে ম্যাচ হবে — সময় অনুযায়ী।</p></div></div><div id="topMatchCards" class="grid"></div></section>
+<div class="stats">
+  <div class="stat" style="--c:#0f9d58"><strong id="statTeams">০</strong><span>নিবন্ধিত দল</span></div>
+  <div class="stat" style="--c:#2e90fa"><strong id="statMatches">০</strong><span>মোট ম্যাচ</span></div>
+  <div class="stat" style="--c:#7a5af8"><strong id="statPlayed">০</strong><span>সম্পন্ন ম্যাচ</span></div>
+  <div class="stat" style="--c:#ff5a5f"><strong id="statGoals">০</strong><span>মোট গোল</span></div>
+</div>
+
+<section id="today" style="--c:#ff5a5f"><div class="sectionHead"><div><h2>আজকের ম্যাচ</h2><p>আজকের তারিখের সব খেলা।</p></div><span class="pill" id="todayDate"></span></div><div id="todayMatches" class="grid"></div></section>
+<section id="yesterday" style="--c:#7a5af8"><div class="sectionHead"><div><h2>গতকালের ফলাফল</h2><p>গতকালের স্কোর, বিজয়ী ও কার্ড।</p></div></div><div id="yesterdayMatches" class="grid"></div></section>
+<section id="rounds" style="--c:#2e90fa"><div class="sectionHead"><div><h2>রাউন্ড অনুযায়ী ম্যাচ</h2><p>প্রতিটি রাউন্ডের আলাদা রং, প্রতিটি ম্যাচ আলাদা কার্ডে।</p></div></div><div id="roundCards" class="grid"></div></section>
+<section id="fixtures" style="--c:#f79009"><div class="sectionHead"><div><h2>ম্যাচ ফিক্সচার</h2><p>তারিখ, সময়, স্কোর ও অবস্থা।</p></div></div><div class="tableWrap"><table><thead><tr><th>তারিখ ও সময়</th><th>রাউন্ড</th><th>ম্যাচ</th><th>স্কোর</th><th>অবস্থা</th></tr></thead><tbody id="fixtureRows"></tbody></table></div></section>
+<section id="teams" style="--c:#0f9d58"><div class="sectionHead"><div><h2>অংশগ্রহণকারী দল</h2><p>অনুমোদিত দলের তালিকা।</p></div><input id="teamSearch" class="search" placeholder="দল খুঁজুন..." aria-label="দল খুঁজুন"></div><div id="teamCards" class="grid"></div></section>
+<section id="results" style="--c:#06aed4"><div class="sectionHead"><div><h2>ম্যাচের ফলাফল</h2><p>সম্পন্ন ম্যাচের স্কোর ও বিজয়ী।</p></div></div><div id="resultCards" class="grid"></div></section>
+
+<section id="admin" class="hidden" style="--c:#14213d"><div class="sectionHead"><div><h2>অ্যাডমিন প্যানেল</h2><p>ম্যাচ, স্কোর, দল ও সাইটের তথ্য পরিচালনা করুন।</p></div><span class="pill ok">অ্যাডমিন লগইন</span></div>
+<div class="adminTabs"><a href="#a_match">⚽ ম্যাচ যোগ</a><a href="#a_score">📊 স্কোর</a><a href="#a_team">🛡️ দল</a><a href="#a_banner">🖼️ ব্যানার</a><a href="#a_site">⚙️ সাইট তথ্য</a><a href="#a_all">📅 সব ম্যাচ</a></div>
+<div class="adminGrid">
+<div class="card" id="a_match"><h3>⚽ নতুন ম্যাচ</h3><form id="matchForm" class="formGrid">
+<div class="field"><label>রাউন্ড *</label><input id="matchRound" required placeholder="যেমন: প্রথম রাউন্ড"></div>
+<div class="field"><label>ম্যাচ নম্বর</label><input id="matchNumber" placeholder="০১"></div>
+<div class="field"><label>প্রথম দল *</label><select id="matchHome" required></select></div>
+<div class="field"><label>দ্বিতীয় দল *</label><select id="matchAway" required></select></div>
+<div class="field"><label>তারিখ *</label><input id="matchDate" type="date" required></div>
+<div class="field"><label>সময় *</label><input id="matchTime" type="hidden"><div class="timePick"><select id="tpH" aria-label="ঘণ্টা"><option value="">ঘণ্টা</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select><select id="tpM" aria-label="মিনিট"><option value="">মিনিট</option><option value="00">00</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="36">36</option><option value="37">37</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="41">41</option><option value="42">42</option><option value="43">43</option><option value="44">44</option><option value="45">45</option><option value="46">46</option><option value="47">47</option><option value="48">48</option><option value="49">49</option><option value="50">50</option><option value="51">51</option><option value="52">52</option><option value="53">53</option><option value="54">54</option><option value="55">55</option><option value="56">56</option><option value="57">57</option><option value="58">58</option><option value="59">59</option></select><select id="tpA" aria-label="AM/PM"><option value="AM">সকাল (AM)</option><option value="PM" selected>বিকাল (PM)</option></select></div><button class="btn sun setTimeBtn" id="tpSet" type="button">✔ সময় সেট করুন</button><div class="tiny" id="tpShow">⏰ এখনো সময় সেট করা হয়নি</div></div>
+<div class="field full"><label>ভেন্যু</label><input id="matchVenue" placeholder="যেমন: কেন্দ্রীয় খেলার মাঠ"></div>
+<div class="field full btnRow"><input type="hidden" id="matchEditId"><button class="btn" id="matchSubmit" type="submit">➕ ম্যাচ যোগ করুন</button><button class="btn secondary hidden" id="matchCancel" type="button">✖ বাতিল</button></div></form></div>
+<div class="card" id="a_score"><h3>📊 স্কোর ও কার্ড</h3><form id="scoreForm" class="formGrid">
+<div class="field full"><label>ম্যাচ বেছে নিন</label><select id="scoreMatch" required></select></div>
+<div class="field"><label>প্রথম দলের গোল</label><input id="scoreHome" type="number" min="0" max="99" value="0" required></div>
+<div class="field"><label>দ্বিতীয় দলের গোল</label><input id="scoreAway" type="number" min="0" max="99" value="0" required></div>
+<div class="field"><label>প্রথম দলের 🟨</label><input id="yellowHome" type="number" min="0" max="30" value="0"></div>
+<div class="field"><label>দ্বিতীয় দলের 🟨</label><input id="yellowAway" type="number" min="0" max="30" value="0"></div>
+<div class="field"><label>প্রথম দলের 🟥</label><input id="redHome" type="number" min="0" max="10" value="0"></div>
+<div class="field"><label>দ্বিতীয় দলের 🟥</label><input id="redAway" type="number" min="0" max="10" value="0"></div>
+<div class="field"><label>অবস্থা</label><select id="scoreStatus"><option value="upcoming">আসন্ন</option><option value="live">চলমান</option><option value="completed">সম্পন্ন</option></select></div>
+<div class="field"><label>বিজয়ী</label><select id="scoreWinner"><option value="auto">স্কোর থেকে নির্ধারণ</option><option value="draw">ড্র</option><option value="home">প্রথম দল</option><option value="away">দ্বিতীয় দল</option></select></div>
+<div class="field full btnRow"><button class="btn" type="submit">💾 স্কোর সংরক্ষণ করুন</button></div></form></div>
+<div class="card" id="a_team"><h3>🛡️ দল পরিচালনা</h3><div id="adminTeams"></div><div class="hr"></div><form id="adminTeamForm" class="formGrid"><div class="field"><label>দলের নাম</label><input id="adminTeamName" required></div><div class="field"><label>অধিনায়ক</label><input id="adminCaptain" required></div><div class="field full btnRow"><input type="hidden" id="teamEditId"><button class="btn" id="teamSubmit" type="submit">➕ দল যোগ করুন</button><button class="btn secondary hidden" id="teamCancel" type="button">✖ বাতিল</button></div></form></div>
+<div class="card" id="a_site"><h3>⚙️ সাইটের তথ্য</h3><form id="settingsForm" class="formGrid"><div class="field full"><label>সাইটের নাম</label><input id="settingName"></div><div class="field full"><label>প্রধান শিরোনাম</label><input id="settingTitle"></div><div class="field full"><label>সংক্ষিপ্ত বিবরণ</label><textarea id="settingText"></textarea></div><div class="field full btnRow"><button class="btn" type="submit">💾 সেভ করুন</button></div></form></div>
+<div class="card" id="a_banner"><h3>🖼️ ব্যানার (স্লাইডার)</h3><div id="adminBanners"></div><div class="hr"></div><form id="bannerForm" class="formGrid"><div class="field full"><label>একাধিক ছবি বেছে নিন (প্রতিটি ৩ MB-এর কম)</label><input id="bannerFiles" type="file" accept="image/*" multiple required></div><div class="field full btnRow"><button class="btn" type="submit">⬆️ ব্যানার আপলোড করুন</button></div></form></div>
+<div class="card" id="a_all" style="grid-column:1/-1"><h3>📅 সব ম্যাচ</h3><div id="adminMatches"></div></div>
+</div></section>
+</main>
+
+<div id="authModal" class="authOverlay hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle"><div class="authBox card">
+  <div class="adminBar"><h3 id="authTitle" style="margin:0">লগইন / রেজিস্ট্রেশন</h3><button class="btn secondary small" id="closeAuth" type="button">বন্ধ ✕</button></div>
+  <div class="authTabs"><button class="btn small" id="tabLogin" type="button">লগইন</button><button class="btn secondary small" id="tabRegister" type="button">নতুন অ্যাকাউন্ট</button></div>
+  <form id="userLoginForm" class="formGrid"><div class="field full"><label>ইমেইল</label><input id="loginEmail" type="email" required autocomplete="email"></div><div class="field full"><label>পাসওয়ার্ড</label><input id="loginPassword" type="password" required autocomplete="current-password"></div><div class="field full"><button class="btn" type="submit">লগইন করুন</button></div></form>
+  <form id="userRegisterForm" class="formGrid hidden"><div class="field full"><label>আপনার নাম</label><input id="regName" required maxlength="80"></div><div class="field full"><label>ইমেইল</label><input id="regEmail" type="email" required autocomplete="email"></div><div class="field full"><label>পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)</label><input id="regPassword" type="password" required minlength="6" autocomplete="new-password"></div><div class="field full"><button class="btn" type="submit">অ্যাকাউন্ট তৈরি করুন</button></div></form>
+  <p class="tiny muted">সাধারণ ব্যবহারকারী ম্যাচ ও ফলাফল দেখতে পারেন। ম্যাচ, দল ও স্কোর পরিচালনা শুধু অ্যাডমিনের কাজ।</p>
+</div></div>
+
+<footer class="footer"><div class="wrap">⚽ জংগল ঠেংগা মিনিবার ফুটবল টুর্নামেন্ট — খেলাধুলায় বন্ধুত্ব, মাঠে প্রতিযোগিতা।</div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+const SB_URL='https://pcilvmmrzvtaucjijdyi.supabase.co',SB_KEY='sb_publishable_Ury5OcG8s3NrFK6r1Iq36g_Rs1VrlpY';
+const sb=supabase.createClient(SB_URL,SB_KEY);
+const $=id=>document.getElementById(id);
+const DEF={name:'জংগল ঠেংগা মিনিবার ফুটবল টুর্নামেন্ট',title:'মাঠে নামুক সেরা দল, জিতুক ফুটবলের আবেগ!',text:'আজকের খেলা, গতকালের ফলাফল, গোল ও কার্ডের তথ্য এক জায়গায় দেখুন।',banner:''};
+const COL=['#0f9d58','#2e90fa','#ff5a5f','#7a5af8','#f79009','#06aed4'];
+const SL={upcoming:'আসন্ন',live:'চলমান',completed:'সম্পন্ন'};
+let D={teams:[],matches:[],banners:[],settings:{...DEF}},admin=false,user=null,RC={},bi=0,bt=null;
+
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const bn=n=>Number(n||0).toLocaleString('bn-BD');
+const ymd=d=>d.toLocaleDateString('en-CA');
+const tn=id=>D.teams.find(t=>t.id===id)?.name||'নির্ধারিত নয়';
+function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(window._tt);window._tt=setTimeout(()=>t.style.display='none',3200)}
+function dl(d){return d?new Date(d+'T00:00:00').toLocaleDateString('bn-BD',{day:'numeric',month:'short',year:'numeric'}):'তারিখ ঠিক হয়নি'}
+const mt=m=>dl(m.match_date)+(m.match_time?' • '+m.match_time.slice(0,5):'');
+function wt(m){if(m.status!=='completed')return '';const w=m.winner==='auto'||!m.winner?(m.home_score===m.away_score?'draw':m.home_score>m.away_score?'home':'away'):m.winner;return w==='draw'?'ম্যাচ ড্র':tn(w==='home'?m.home_id:m.away_id)+' বিজয়ী'}
+const empty=t=>`<div class="empty">${esc(t)}</div>`;
+
+const SK=['#ffd9b0','#e8b88a','#c68a5c','#f3c9a0'],HR=['#3b2a20','#14213d','#8a4b1f','#222'],I='#14213d';
+const KIT=[['#e63946','#14213d','#ffffff'],['#2e90fa','#ffffff','#14213d'],['#ffc233','#14213d','#ffc233'],['#7a5af8','#ffffff','#7a5af8'],['#0f9d58','#ffffff','#0f9d58'],['#ff7a00','#14213d','#ff7a00'],['#06aed4','#14213d','#ffffff'],['#111827','#ffc233','#111827']];
+const tc=c=>c==='#ffc233'?'#14213d':'#fff';
+const kit=id=>Math.max(0,D.teams.findIndex(t=>t.id===id));
+const kc=id=>KIT[kit(id)%8][0];
+function pl(id,pose){const i=kit(id),[j,sh,so]=KIT[i%8],s=SK[i%4],h=HR[(i+1)%4],n=(i*7+5)%19+1;
+const ball=(x,y)=>`<circle cx="${x}" cy="${y}" r="8" fill="#fff" stroke="${I}" stroke-width="2"/><path d="M${x-3} ${y-2}l3-3 3 3-1 4h-4z" fill="${I}"/>`;
+const L=(d,c,w)=>`<path d="${d}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" fill="none"/>`;
+let legs,arms,bl;
+if(pose===0){legs=L('M40 84V102',s,10)+L('M40 92V102',so,11)+`<ellipse cx="38" cy="107" rx="9" ry="4.5" fill="${I}"/>`+L('M52 84L70 98',s,10)+L('M62 92L70 98',so,11)+`<ellipse cx="74" cy="101" rx="9" ry="4.5" transform="rotate(35 74 101)" fill="${I}"/>`;
+arms=L('M33 46L22 64',j,9)+`<circle cx="21" cy="66" r="4.5" fill="${s}"/>`+L('M58 46L70 58',j,9)+`<circle cx="71" cy="60" r="4.5" fill="${s}"/>`;bl=ball(88,106)}
+else{legs=L('M39 84V102',s,10)+L('M39 92V102',so,11)+L('M53 84V102',s,10)+L('M53 92V102',so,11)+`<ellipse cx="36" cy="107" rx="9" ry="4.5" fill="${I}"/><ellipse cx="56" cy="107" rx="9" ry="4.5" fill="${I}"/>`;
+arms=L('M33 46L20 28',j,9)+`<circle cx="19" cy="25" r="4.5" fill="${s}"/>`+L('M58 46L72 28',j,9)+`<circle cx="73" cy="25" r="4.5" fill="${s}"/>`;bl=ball(80,108)}
+return `<svg viewBox="0 0 100 118" aria-hidden="true">${bl}${legs}${arms}<path d="M29 72h32l3 14H26z" fill="${sh}" stroke="${I}" stroke-width="1.5" stroke-linejoin="round"/><path d="M31 42q14-6 28 0l3 32H28z" fill="${j}" stroke="${I}" stroke-width="1.5" stroke-linejoin="round"/><rect x="29.5" y="51" width="31" height="4" fill="${sh}" opacity=".55"/><text x="45" y="68" text-anchor="middle" font-size="12" font-weight="800" fill="${tc(j)}" font-family="Baloo Da 2,sans-serif">${n}</text><circle cx="45" cy="24" r="15" fill="${s}" stroke="${I}" stroke-width="1.5"/><path d="M30 22a15 15 0 0130 0c-8-7-22-7-30 0z" fill="${h}"/>${i%2?`<path d="M30.5 19q14.5-5 29 0" stroke="${j}" stroke-width="3.5" fill="none"/>`:''}<ellipse cx="39" cy="26" rx="3.4" ry="3.8" fill="#fff"/><ellipse cx="51" cy="26" rx="3.4" ry="3.8" fill="#fff"/><circle cx="39.8" cy="26.6" r="1.7" fill="${I}"/><circle cx="51.8" cy="26.6" r="1.7" fill="${I}"/><path d="M38 32q7 6 14 0z" fill="#fff" stroke="${I}" stroke-width="1.4" stroke-linejoin="round"/><circle cx="33.5" cy="31" r="2.4" fill="#ff8a8a" opacity=".55"/><circle cx="56.5" cy="31" r="2.4" fill="#ff8a8a" opacity=".55"/></svg>`}
+const acts=m=>admin?`<div class="cardActions"><button class="btn secondary small" onclick="editMatch('${m.id}')">✏️ এডিট</button><button class="btn secondary small" onclick="loadScore('${m.id}')">📊 স্কোর</button><button class="btn danger small" onclick="delRow('matches','${m.id}')">🗑 মুছুন</button></div>`:'';
+function mc(m){const c=RC[m.round||'অন্যান্য']||COL[0],done=m.status==='completed',show=done||m.status==='live';
+const side=(id,pose)=>{const k=kc(id);return `<div class="side">${pl(id,pose)}<div class="tn" style="--k:${k};--kt:${tc(k)}">${esc(tn(id))}</div></div>`};
+return `<article class="match" style="--c:${c}"><div class="mt"><b>⚽ ${esc(m.round||'ম্যাচ')}${m.number?' • ম্যাচ '+esc(m.number):''}</b><span class="pill ${m.status}">${SL[m.status]}</span></div><div class="pitchBox"><div class="teams">${side(m.home_id,0)}<div class="score">${show?bn(m.home_score)+' : '+bn(m.away_score):'VS'}</div>${side(m.away_id,1)}</div></div><div class="mb"><span>🗓 ${esc(mt(m))}</span><span>📍 ${esc(m.venue||'ভেন্যু ঠিক হয়নি')}</span></div>${done?`<div class="res">🏆 ${esc(wt(m))}<span>🟨 ${bn(m.yellow_home)}-${bn(m.yellow_away)} &nbsp;🟥 ${bn(m.red_home)}-${bn(m.red_away)}</span></div>`:''}${acts(m)}</article>`}
+
+
+/* ===== লাইভ ও সামনের ম্যাচ সবার উপরে ===== */
+function mdt(m){return new Date((m.match_date||'2999-12-31')+'T'+((m.match_time||'00:00').slice(0,5)))}
+function cdText(ms){if(ms<=0)return 'খেলা শুরু হওয়ার সময় হয়েছে';const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),mi=Math.floor(ms%36e5/6e4);return '⏳ শুরু হতে আর '+(d?bn(d)+' দিন ':'')+(h?bn(h)+' ঘণ্টা ':'')+bn(mi)+' মিনিট'}
+function renderTop(){const el=$('topMatchCards');if(!el)return;const now=Date.now();
+const live=D.matches.filter(m=>m.status==='live').sort((a,b)=>mdt(a)-mdt(b));
+const up=D.matches.filter(m=>m.status==='upcoming'&&m.match_date&&mdt(m).getTime()>=now-2*36e5).sort((a,b)=>mdt(a)-mdt(b)).slice(0,4);
+const wrap=(m,tag)=>`<div class="topItem">${tag}${mc(m)}</div>`;
+const h=live.map(m=>wrap(m,'<div class="topTag liveTag">🔴 লাইভ — এখন চলছে</div>')).join('')+up.map((m,i)=>wrap(m,`<div class="topTag${i===0&&!live.length?' nextTag':''}">${i===0?'⏭ সবচেয়ে কাছের ম্যাচ • ':'🕒 '}${cdText(mdt(m)-now)}</div>`)).join('');
+el.innerHTML=h||empty('এখন কোনো লাইভ বা সামনের ম্যাচ নেই।')}
+setInterval(()=>{if(D&&D.matches)renderTop()},30000);
+function render(){
+renderTop();
+const s=D.settings;$('siteBrand').textContent=s.name;document.title=s.name;$('heroTitle').textContent=s.title;$('heroText').textContent=s.text;
+drawBanners();
+const now=new Date(),today=ymd(now),y=new Date();y.setDate(y.getDate()-1);const yday=ymd(y);$('todayDate').textContent=dl(today);
+const ms=[...D.matches].sort((a,b)=>(a.match_date||'').localeCompare(b.match_date||'')||(a.match_time||'').localeCompare(b.match_time||''));
+const rn=[...new Set(ms.map(m=>m.round||'অন্যান্য'))];RC={};rn.forEach((r,i)=>RC[r]=COL[i%COL.length]);
+const td=ms.filter(m=>m.match_date===today),yd=ms.filter(m=>m.match_date===yday&&m.status==='completed');
+$('todayMatches').innerHTML=td.length?td.map(mc).join(''):empty('আজ কোনো ম্যাচ নেই।');
+$('yesterdayMatches').innerHTML=yd.length?yd.map(mc).join(''):empty('গতকালের কোনো ফলাফল নেই।');
+$('roundCards').innerHTML=rn.length?rn.map(r=>`<div class="card roundCard" style="--c:${RC[r]}"><h3>🏁 ${esc(r)}</h3>${ms.filter(m=>(m.round||'অন্যান্য')===r).map(mc).join('')}</div>`).join(''):empty('এখনো কোনো রাউন্ড যোগ হয়নি।');
+$('fixtureRows').innerHTML=ms.length?ms.map(m=>`<tr><td>${esc(mt(m))}</td><td>${esc(m.round||'—')}</td><td><b>${esc(tn(m.home_id))}</b> বনাম <b>${esc(tn(m.away_id))}</b><div class="tiny muted">${esc(m.venue||'')}</div></td><td>${m.status==='upcoming'?'—':bn(m.home_score)+' : '+bn(m.away_score)}</td><td><span class="pill ${m.status}">${SL[m.status]}</span></td></tr>`).join(''):`<tr><td colspan="5">${empty('কোনো ফিক্সচার নেই।')}</td></tr>`;
+const q=$('teamSearch').value.toLowerCase(),ap=D.teams.filter(t=>t.status==='approved'),tl=ap.filter(t=>t.name.toLowerCase().includes(q));
+$('teamCards').innerHTML=tl.length?tl.map(t=>`<article class="card teamCard" style="--c:${kc(t.id)}">${t.logo?`<img src="${esc(t.logo)}" alt="" width="52" height="52" style="border-radius:50%;object-fit:cover">`:pl(t.id,1)}<div style="flex:1;min-width:0"><h3 style="margin:0">${esc(t.name)}</h3><div class="muted tiny">অধিনায়ক: ${esc(t.captain)}</div></div>${admin?`<div class="cardActions"><button class="btn secondary small" onclick="editTeam('${t.id}')">✏️ এডিট</button><button class="btn danger small" onclick="delRow('teams','${t.id}')">🗑 মুছুন</button></div>`:''}</article>`).join(''):empty('কোনো অনুমোদিত দল নেই।');
+const rs=ms.filter(m=>m.status==='completed').reverse();$('resultCards').innerHTML=rs.length?rs.map(mc).join(''):empty('এখনো কোনো ফলাফল নেই।');
+$('statTeams').textContent=bn(ap.length);$('statMatches').textContent=bn(ms.length);$('statPlayed').textContent=bn(rs.length);
+$('statGoals').textContent=bn(ms.filter(m=>m.status!=='upcoming').reduce((a,m)=>a+(m.home_score||0)+(m.away_score||0),0));
+if(admin)renderAdmin();}
+
+function drawBanners(){const a=$('bannerArea'),L=D.banners,sig=L.map(b=>b.id+b.url).join();if(a.dataset.sig===sig)return;a.dataset.sig=sig;clearInterval(bt);
+if(!L.length){a.innerHTML='';return}bi=Math.min(bi,L.length-1);
+a.innerHTML=`<div class="slider"><div class="track" id="track">${L.map(b=>`<img src="${esc(b.url)}" alt="টুর্নামেন্টের ব্যানার" draggable="false">`).join('')}</div>${L.length>1?`<button class="sb prev" aria-label="আগের ব্যানার">‹</button><button class="sb next" aria-label="পরের ব্যানার">›</button><div class="dots">${L.map((_,i)=>`<i data-i="${i}"></i>`).join('')}</div>`:''}</div>`;
+const sl=a.querySelector('.slider'),rm=false;
+const go=i=>{bi=(i+L.length)%L.length;$('track').style.transform=`translateX(-${bi*100}%)`;sl.querySelectorAll('.dots i').forEach((d,j)=>d.classList.toggle('on',j===bi))};
+const st=()=>{clearInterval(bt);if(L.length>1&&!rm)bt=setInterval(()=>go(bi+1),3000)};
+go(bi);
+if(L.length>1){sl.querySelector('.prev').onclick=()=>{go(bi-1);st()};sl.querySelector('.next').onclick=()=>{go(bi+1);st()};sl.querySelectorAll('.dots i').forEach(d=>d.onclick=()=>{go(+d.dataset.i);st()});
+let x0=null;sl.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});sl.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>40){go(bi+(dx<0?1:-1));st()}});
+sl.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')clearInterval(bt)});sl.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')st()});st()}}
+function renderAdmin(){
+$('adminBanners').innerHTML=D.banners.length?D.banners.map((b,i)=>`<div class="item bnItem"><img src="${esc(b.url)}" alt=""><span class="tiny muted" style="flex:1">ব্যানার ${bn(i+1)}</span><input type="file" accept="image/*" class="hidden" id="rb_${b.id}" onchange="replaceBanner('${b.id}',this.files[0]);this.value=''"><button class="btn secondary small" onclick="$('rb_${b.id}').click()">🔄 ছবি বদলান</button><button class="btn danger small" onclick="delBanner('${b.id}')">🗑 মুছুন</button></div>`).join(''):empty('কোনো ব্যানার নেই।');
+const op='<option value="">বেছে নিন</option>'+D.teams.filter(t=>t.status==='approved').map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('');
+[['matchHome',op],['matchAway',op]].forEach(([i,h])=>{const e=$(i),v=e.value;e.innerHTML=h;e.value=v});
+const sm=$('scoreMatch'),sv=sm.value;sm.innerHTML='<option value="">ম্যাচ বেছে নিন</option>'+D.matches.map(m=>`<option value="${m.id}">${esc(m.round)} — ${esc(tn(m.home_id))} বনাম ${esc(tn(m.away_id))}</option>`).join('');sm.value=sv;
+$('adminTeams').innerHTML=D.teams.length?D.teams.map(t=>`<div class="item"><b>${esc(t.name)}</b> <span class="pill ${t.status==='approved'?'ok':'wait'}">${t.status==='approved'?'অনুমোদিত':'অপেক্ষমাণ'}</span><div class="tiny muted">অধিনায়ক: ${esc(t.captain)}</div><div class="cardActions"><button class="btn secondary small" onclick="editTeam('${t.id}')">এডিট</button>${t.status!=='approved'?`<button class="btn small" onclick="approveTeam('${t.id}')">অনুমোদন</button>`:''}<button class="btn danger small" onclick="delRow('teams','${t.id}')">মুছুন</button></div></div>`).join(''):empty('কোনো দল নেই।');
+$('adminMatches').innerHTML=D.matches.length?D.matches.map(m=>`<div class="item"><b>${esc(m.round)}</b> — ${esc(tn(m.home_id))} বনাম ${esc(tn(m.away_id))} <span class="tiny muted">• ${esc(mt(m))}</span><div class="cardActions"><button class="btn secondary small" onclick="editMatch('${m.id}')">এডিট</button><button class="btn secondary small" onclick="loadScore('${m.id}')">স্কোর</button><button class="btn danger small" onclick="delRow('matches','${m.id}')">মুছুন</button></div></div>`).join(''):empty('কোনো ম্যাচ নেই।');}
+
+async function load(){
+const [t,m,s,b]=await Promise.all([sb.from('teams').select('*').order('created_at'),sb.from('matches').select('*'),sb.from('settings').select('*').eq('id',1).maybeSingle(),sb.from('banners').select('*')]);
+if(t.error||m.error)toast('ডেটা আনা যায়নি — SQL চালানো হয়েছে কি না দেখুন: '+(t.error||m.error).message);
+if(b.error)toast('ব্যানার আনা যায়নি: '+b.error.message);
+D.teams=t.data||[];D.matches=m.data||[];D.banners=(b.data||[]).sort((x,y)=>String(x.created_at||x.id).localeCompare(String(y.created_at||y.id),undefined,{numeric:true}));D.settings={...DEF,...(s.data||{})};render();}
+async function run(p,ok){const {error}=await p;if(error)return toast('ত্রুটি: '+error.message),false;await load();toast(ok);return true}
+
+async function setUser(u){user=u;admin=false;
+if(u){const {data}=await sb.from('profiles').select('role').eq('id',u.id).maybeSingle();admin=data?.role==='admin'}
+$('loginBtn').textContent=u?'লগআউট':'লগইন / রেজিস্ট্রেশন';$('admin').classList.toggle('hidden',!admin);$('adminLink').classList.toggle('hidden',!admin);
+if(admin){$('settingName').value=D.settings.name;$('settingTitle').value=D.settings.title;$('settingText').value=D.settings.text}
+await load();}
+sb.auth.onAuthStateChange((_e,s)=>setTimeout(()=>setUser(s?.user||null),0));
+
+function tab(t){$('userLoginForm').classList.toggle('hidden',t!=='login');$('userRegisterForm').classList.toggle('hidden',t!=='register');$('tabLogin').className='btn small'+(t==='login'?'':' secondary');$('tabRegister').className='btn small'+(t==='register'?'':' secondary')}
+$('loginBtn').onclick=async()=>{if(user){await sb.auth.signOut();toast('লগআউট সম্পন্ন।')}else{$('authModal').classList.remove('hidden');tab('login')}};
+$('closeAuth').onclick=()=>$('authModal').classList.add('hidden');
+$('tabLogin').onclick=()=>tab('login');$('tabRegister').onclick=()=>tab('register');
+$('userLoginForm').onsubmit=async e=>{e.preventDefault();const {data,error}=await sb.auth.signInWithPassword({email:$('loginEmail').value.trim(),password:$('loginPassword').value});
+if(error)return toast('লগইন হয়নি: ইমেইল/পাসওয়ার্ড ঠিক নয় বা ইমেইল কনফার্ম করা হয়নি।');$('authModal').classList.add('hidden');e.target.reset();toast('স্বাগতম!')};
+$('userRegisterForm').onsubmit=async e=>{e.preventDefault();const {data,error}=await sb.auth.signUp({email:$('regEmail').value.trim(),password:$('regPassword').value,options:{data:{name:$('regName').value.trim()}}});
+if(error)return toast('ত্রুটি: '+error.message);e.target.reset();if(data.session){$('authModal').classList.add('hidden');toast('অ্যাকাউন্ট তৈরি হয়েছে।')}else{tab('login');toast('ইমেইলে কনফার্মেশন লিংক পাঠানো হয়েছে। কনফার্ম করে লগইন করুন।')}};
+
+
+/* ===== সময় সেট করার পিকার ===== */
+function setTimeVal(v){const h=$('tpH'),m=$('tpM'),a=$('tpA');$('matchTime').value=v||'';
+if(v){const [H,M]=v.split(':').map(Number);a.value=H>=12?'PM':'AM';h.value=String(H%12||12);m.value=String(M).padStart(2,'0')}else{h.value='';m.value=''}
+tpShow()}
+function tpShow(){const v=$('matchTime').value,e=$('tpShow');if(!v){e.textContent='⏰ এখনো সময় সেট করা হয়নি';e.className='tiny';return}
+const [H,M]=v.split(':').map(Number);e.textContent='✅ সেট করা সময়: '+String(H%12||12).padStart(2,'0')+':'+String(M).padStart(2,'0')+' '+(H>=12?'PM':'AM');e.className='tiny tpOk'}
+function applyTime(quiet){const h=$('tpH').value,m=$('tpM').value,a=$('tpA').value;if(!h||m===''){if(!quiet)toast('ঘণ্টা ও মিনিট বেছে নিন।');return false}
+let H=+h%12;if(a==='PM')H+=12;$('matchTime').value=String(H).padStart(2,'0')+':'+m;tpShow();if(!quiet)toast('সময় সেট হয়েছে ✔');return true}
+$('tpSet').onclick=()=>applyTime(false);['tpH','tpM','tpA'].forEach(i=>$(i).addEventListener('change',()=>{if($('tpH').value&&$('tpM').value!=='')applyTime(true)}));
+$('matchForm').onsubmit=async e=>{e.preventDefault();if(!$('matchTime').value&&!applyTime(true))return toast('খেলার সময় সেট করুন।');if(!$('matchDate').value)return toast('তারিখ বেছে নিন।');const h=$('matchHome').value,a=$('matchAway').value;if(!h||!a)return toast('দুটি দল বেছে নিন।');if(h===a)return toast('একই দল দুই পাশে দেওয়া যাবে না।');
+const o={round:$('matchRound').value.trim(),number:$('matchNumber').value.trim(),home_id:h,away_id:a,match_date:$('matchDate').value,match_time:$('matchTime').value,venue:$('matchVenue').value.trim()},id=$('matchEditId').value;
+if(await run(id?sb.from('matches').update(o).eq('id',id):sb.from('matches').insert(o),id?'ম্যাচ আপডেট হয়েছে।':'ম্যাচ যোগ হয়েছে।'))resetMatch()};
+$('scoreForm').onsubmit=async e=>{e.preventDefault();const id=$('scoreMatch').value;if(!id)return toast('একটি ম্যাচ বেছে নিন।');
+const hs=+$('scoreHome').value,as=+$('scoreAway').value;let w=$('scoreWinner').value;if(w==='auto')w=hs===as?'draw':hs>as?'home':'away';
+run(sb.from('matches').update({home_score:hs,away_score:as,yellow_home:+$('yellowHome').value,yellow_away:+$('yellowAway').value,red_home:+$('redHome').value,red_away:+$('redAway').value,status:$('scoreStatus').value,winner:w}).eq('id',id),'স্কোর ও কার্ড আপডেট হয়েছে।')};
+$('adminTeamForm').onsubmit=async e=>{e.preventDefault();const id=$('teamEditId').value,o={name:$('adminTeamName').value.trim(),captain:$('adminCaptain').value.trim()};if(!id)o.status='approved';
+if(await run(id?sb.from('teams').update(o).eq('id',id):sb.from('teams').insert(o),id?'দল আপডেট হয়েছে।':'দল যোগ হয়েছে।'))resetTeam()};
+$('settingsForm').onsubmit=e=>{e.preventDefault();run(sb.from('settings').upsert({id:1,name:$('settingName').value.trim()||DEF.name,title:$('settingTitle').value.trim()||DEF.title,text:$('settingText').value.trim()||DEF.text}),'সাইটের তথ্য সেভ হয়েছে।')};
+$('bannerForm').onsubmit=async e=>{e.preventDefault();const fs=[...$('bannerFiles').files];if(fs.some(f=>f.size>3e6))return toast('প্রতিটি ছবি ৩ MB-এর কম হতে হবে।');
+for(const f of fs){const p=Date.now()+'-'+Math.random().toString(36).slice(2,7)+'.'+(f.name.split('.').pop()||'jpg').toLowerCase();
+const u=await sb.storage.from('banners').upload(p,f,{contentType:f.type});if(u.error)return toast('আপলোড হয়নি: '+u.error.message);
+const url=sb.storage.from('banners').getPublicUrl(p).data.publicUrl,r=await sb.from('banners').insert({url,path:p});if(r.error)return toast('ত্রুটি: '+r.error.message)}
+e.target.reset();await load();toast('ব্যানার আপলোড হয়েছে।')};
+async function replaceBanner(id,f){const b=D.banners.find(x=>String(x.id)===String(id));if(!b||!f)return;if(f.size>3e6)return toast('ছবি ৩ MB-এর কম হতে হবে।');
+const p=Date.now()+'-'+Math.random().toString(36).slice(2,7)+'.'+(f.name.split('.').pop()||'jpg').toLowerCase();
+const u=await sb.storage.from('banners').upload(p,f,{contentType:f.type});if(u.error)return toast('আপলোড হয়নি: '+u.error.message);
+const url=sb.storage.from('banners').getPublicUrl(p).data.publicUrl;
+if(await run(sb.from('banners').update({url,path:p}).eq('id',id),'ব্যানার বদলানো হয়েছে।'))await sb.storage.from('banners').remove([b.path])}
+async function delBanner(id){const b=D.banners.find(x=>String(x.id)===String(id));if(!b||!confirm('এই ব্যানার মুছে ফেলবেন?'))return;await sb.storage.from('banners').remove([b.path]);run(sb.from('banners').delete().eq('id',id),'ব্যানার মুছে ফেলা হয়েছে।')}
+function editTeam(id){const x=D.teams.find(v=>v.id===id);if(!x)return;$('teamEditId').value=id;$('adminTeamName').value=x.name;$('adminCaptain').value=x.captain||'';$('teamSubmit').textContent='দল আপডেট করুন';$('teamCancel').classList.remove('hidden');$('adminTeamForm').scrollIntoView({behavior:'smooth',block:'center'})}
+function resetTeam(){$('adminTeamForm').reset();$('teamEditId').value='';$('teamSubmit').textContent='➕ দল যোগ করুন';$('teamCancel').classList.add('hidden')}
+function editMatch(id){const m=D.matches.find(v=>v.id===id);if(!m)return;$('matchEditId').value=id;$('matchRound').value=m.round||'';$('matchNumber').value=m.number||'';$('matchHome').value=m.home_id||'';$('matchAway').value=m.away_id||'';$('matchDate').value=m.match_date||'';setTimeVal((m.match_time||'').slice(0,5));$('matchVenue').value=m.venue||'';$('matchSubmit').textContent='💾 ম্যাচ আপডেট করুন';$('matchCancel').classList.remove('hidden');$('matchForm').scrollIntoView({behavior:'smooth',block:'center'})}
+function resetMatch(){$('matchForm').reset();setTimeVal('');$('matchEditId').value='';$('matchSubmit').textContent='➕ ম্যাচ যোগ করুন';$('matchCancel').classList.add('hidden')}
+$('teamCancel').onclick=resetTeam;$('matchCancel').onclick=resetMatch;
+$('teamSearch').oninput=render;
+function approveTeam(id){run(sb.from('teams').update({status:'approved'}).eq('id',id),'দল অনুমোদিত হয়েছে।')}
+function delRow(tb,id){if(confirm('মুছে ফেলবেন? এটি ফেরানো যাবে না।'))run(sb.from(tb).delete().eq('id',id),'মুছে ফেলা হয়েছে।')}
+function loadScore(id){const m=D.matches.find(x=>x.id===id);if(!m)return;$('scoreMatch').value=id;$('scoreHome').value=m.home_score;$('scoreAway').value=m.away_score;$('yellowHome').value=m.yellow_home;$('yellowAway').value=m.yellow_away;$('redHome').value=m.red_home;$('redAway').value=m.red_away;$('scoreStatus').value=m.status;$('scoreWinner').value='auto';$('scoreForm').scrollIntoView({behavior:'smooth',block:'center'})}
+render();
+</script>
+</body>
+</html>
